@@ -1,0 +1,33 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather App</title>
+</head>
+<body>
+    <h1>Weather App</h1>
+    <input type="text" id="cityInput" placeholder="Enter city name">
+    <button id="getWeatherBtn">Get Weather</button>
+    <div id="weatherInfo"></div>
+
+    <script>
+        const getWeatherBtn = document.getElementById('getWeatherBtn');
+        const cityInput = document.getElementById('cityInput');
+        const weatherInfo = document.getElementById('weatherInfo');
+
+        getWeatherBtn.addEventListener('click', async () => {
+            const city = cityInput.value;
+            if (!city) return;
+
+            const response = await fetch(`/weather?city=${city}`);
+            const data = await response.json();
+
+            weatherInfo.innerHTML = `
+                <h2>Weather in ${data.name}, ${data.sys.country}</h2>
+                <p>Temperature: ${data.main.temp}°C</p>
+                <p>Weather: ${data.weather[0].description}</p>
+            `;
+        });
+    </script>
+</body>
+</html>
